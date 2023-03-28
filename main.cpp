@@ -24,49 +24,32 @@ int main() {
     }
     data.push_back(std::stoi(line));
   }
-  int capacity = 10;
-  int size = 0;
-  int *data = new int[capacity];
 
-  int num;
-  while (infile >> num) {
-    if (size == capacity) {
-      capacity *= 2;
-      int *new_data = new int[capacity];
-      std::copy(data, data + size, new_data);
-      delete[] data;
-      data = new_data;
-    }
-
-    data[size++] = num;
-  }
   if (infile.bad()) {
     std::cout << "Error reading data from file!" << std::endl;
     return 1;
   }
+
   infile.close();
 
   std::cout << "File is open" << std::endl;
-  std::cout << "There are " << size << " numbers in the file" << std::endl;
+  std::cout << "There are " << data.size() << " numbers in the file | ";
 
-  if (size == 0) {
+  if (data.size() == 0) {
     std::cout << "No data found in file!" << std::endl;
-    delete[] data;
     return 1;
   }
 
-  std::sort(data, data + size);
+  std::sort(data.begin(), data.end());
 
   int median;
-  if (size % 2 == 0) {
-    median = (data[size / 2 - 1] + data[size / 2]) / 2;
+  if (data.size() % 2 == 0) {
+    median = (data[data.size() / 2] + data[data.size() / 2]) / 2;
   } else {
-    median = data[size / 2];
+    median = data[data.size() / 2];
   }
 
   std::cout << "The median is: " << median << std::endl;
-
-  delete[] data;
 
   return 0;
 }
